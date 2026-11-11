@@ -1,0 +1,149 @@
+# Chinese (Simplified, China) translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: zh_CN\n"
+"Language-Team: zh_CN <LL@li.org>\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "表格导航"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "开启或关闭表格导航"
+
+msgid "Tablo gezimi açıldı"
+msgstr "已开启表格导航"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "已关闭表格导航"
+
+msgid "Excel hücresi okunamadı"
+msgstr "无法读取 Excel 单元格"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "朗读当前 Excel 行中的所有单元格"
+
+msgid "Excel satırı okunamadı"
+msgstr "无法读取 Excel 行"
+
+msgid "Kopyalanamadı"
+msgstr "无法复制"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "此表格过大，无法一次复制"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "此列过大，无法一次复制"
+
+msgid "Bulunulan hücre boş"
+msgstr "当前单元格为空"
+
+msgid "Panoya kopyalandı"
+msgstr "已复制到剪贴板"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "无法复制 Excel 数据"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "无法读取表格单元格"
+
+msgid "Belge sınırı"
+msgstr "文档边界"
+
+msgid "Tablo sınırı"
+msgstr "表格边界"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "将当前表格行复制到剪贴板（仅表格模式）"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "当前不在表格中"
+
+msgid "Satır panoya kopyalandı"
+msgstr "行已复制到剪贴板"
+
+msgid "Satır kopyalanamadı"
+msgstr "无法复制行"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "将整个表格复制到剪贴板（仅表格模式）"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "无法确定表格行数"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "无法确定表格列数"
+
+msgid "Tablo kopyalanamadı"
+msgstr "无法复制表格"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "复制当前列的所有单元格（仅表格模式）"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "无法确定行数，或表格过大"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "此列没有可复制的单元格"
+
+msgid "Sütun kopyalanamadı"
+msgstr "无法复制列"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "仅复制当前单元格内容（仅表格模式）"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "单元格已复制到剪贴板"
+
+msgid "Hücre kopyalanamadı"
+msgstr "无法复制单元格"
+
+msgid "Boş"
+msgstr "空白"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "第 {num} 列"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "已复制 {count} 行到剪贴板"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "已复制表格的 {count} 行"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "已复制列中的 {count} 个单元格"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "当前不在 Excel 单元格中"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "无法访问 Excel 工作表"
+
+msgid "Tablo bulunamadı"
+msgstr "未找到表格"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "此单元格中未找到表格"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "此数据区域超过 {count} 列"
+
