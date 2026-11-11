@@ -1,0 +1,149 @@
+# Spanish translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: es\n"
+"Language-Team: es <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "Navegación por tablas"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "Activa o desactiva la navegación por tablas"
+
+msgid "Tablo gezimi açıldı"
+msgstr "Navegación por tablas activada"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "Navegación por tablas desactivada"
+
+msgid "Excel hücresi okunamadı"
+msgstr "No se pudo leer la celda de Excel"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "Lee todas las celdas de la fila actual de Excel"
+
+msgid "Excel satırı okunamadı"
+msgstr "No se pudo leer la fila de Excel"
+
+msgid "Kopyalanamadı"
+msgstr "No se pudo copiar"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "Esta tabla es demasiado grande para copiarla de una vez"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "Esta columna es demasiado grande para copiarla de una vez"
+
+msgid "Bulunulan hücre boş"
+msgstr "La celda actual está vacía"
+
+msgid "Panoya kopyalandı"
+msgstr "Copiado al portapapeles"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "No se pudieron copiar los datos de Excel"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "No se pudo leer la celda de la tabla"
+
+msgid "Belge sınırı"
+msgstr "Límite del documento"
+
+msgid "Tablo sınırı"
+msgstr "Límite de la tabla"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia la fila actual al portapapeles (solo en modo tabla)"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "No está en una tabla"
+
+msgid "Satır panoya kopyalandı"
+msgstr "Fila copiada al portapapeles"
+
+msgid "Satır kopyalanamadı"
+msgstr "No se pudo copiar la fila"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia toda la tabla al portapapeles (solo en modo tabla)"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "No se pudo determinar el número de filas"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "No se pudo determinar el número de columnas"
+
+msgid "Tablo kopyalanamadı"
+msgstr "No se pudo copiar la tabla"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia todas las celdas de la columna actual (solo en modo tabla)"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "No se pudo determinar el número de filas o la tabla es demasiado grande"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "No hay celdas para copiar en esta columna"
+
+msgid "Sütun kopyalanamadı"
+msgstr "No se pudo copiar la columna"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia solo el contenido de la celda actual (solo en modo tabla)"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "Celda copiada al portapapeles"
+
+msgid "Hücre kopyalanamadı"
+msgstr "No se pudo copiar la celda"
+
+msgid "Boş"
+msgstr "Vacío"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "Columna {num}"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "{count} filas copiadas al portapapeles"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "Se copiaron {count} filas de la tabla"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "Se copiaron {count} celdas de la columna"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "No está en una celda de Excel"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "No se pudo acceder a la hoja de Excel"
+
+msgid "Tablo bulunamadı"
+msgstr "No se encontró ninguna tabla"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "No se encontró una tabla en esta celda"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "Este rango de datos tiene más de {count} columnas"
+
