@@ -1,0 +1,150 @@
+# Russian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ru\n"
+"Language-Team: ru <LL@li.org>\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || "
+"n%100>=20) ? 1 : 2);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "Навигация по таблицам"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "Включает или выключает навигацию по таблицам"
+
+msgid "Tablo gezimi açıldı"
+msgstr "Навигация по таблицам включена"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "Навигация по таблицам выключена"
+
+msgid "Excel hücresi okunamadı"
+msgstr "Не удалось прочитать ячейку Excel"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "Читает все ячейки текущей строки Excel"
+
+msgid "Excel satırı okunamadı"
+msgstr "Не удалось прочитать строку Excel"
+
+msgid "Kopyalanamadı"
+msgstr "Не удалось скопировать"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "Таблица слишком велика для копирования за один раз"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "Столбец слишком велик для копирования за один раз"
+
+msgid "Bulunulan hücre boş"
+msgstr "Текущая ячейка пуста"
+
+msgid "Panoya kopyalandı"
+msgstr "Скопировано в буфер обмена"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "Не удалось скопировать данные Excel"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "Не удалось прочитать ячейку таблицы"
+
+msgid "Belge sınırı"
+msgstr "Граница документа"
+
+msgid "Tablo sınırı"
+msgstr "Граница таблицы"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Копирует текущую строку таблицы (только в режиме таблицы)"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "Вы не находитесь в таблице"
+
+msgid "Satır panoya kopyalandı"
+msgstr "Строка скопирована в буфер обмена"
+
+msgid "Satır kopyalanamadı"
+msgstr "Не удалось скопировать строку"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Копирует всю таблицу (только в режиме таблицы)"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "Не удалось определить число строк таблицы"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "Не удалось определить число столбцов таблицы"
+
+msgid "Tablo kopyalanamadı"
+msgstr "Не удалось скопировать таблицу"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Копирует все ячейки текущего столбца (только в режиме таблицы)"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "Не удалось определить число строк или таблица слишком велика"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "В этом столбце нет ячеек для копирования"
+
+msgid "Sütun kopyalanamadı"
+msgstr "Не удалось скопировать столбец"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Копирует только содержимое текущей ячейки (только в режиме таблицы)"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "Ячейка скопирована в буфер обмена"
+
+msgid "Hücre kopyalanamadı"
+msgstr "Не удалось скопировать ячейку"
+
+msgid "Boş"
+msgstr "Пусто"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "Столбец {num}"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "Скопировано строк: {count}"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "Скопировано строк таблицы: {count}"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "Скопировано ячеек столбца: {count}"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "Вы не находитесь в ячейке Excel"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "Не удалось получить доступ к листу Excel"
+
+msgid "Tablo bulunamadı"
+msgstr "Таблица не найдена"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "В этой ячейке таблица не найдена"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "В этом диапазоне данных более {count} столбцов"
+
