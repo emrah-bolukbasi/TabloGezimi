@@ -1,0 +1,149 @@
+# Italian translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: it\n"
+"Language-Team: it <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "Navigazione nelle tabelle"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "Attiva o disattiva la navigazione nelle tabelle"
+
+msgid "Tablo gezimi açıldı"
+msgstr "Navigazione nelle tabelle attivata"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "Navigazione nelle tabelle disattivata"
+
+msgid "Excel hücresi okunamadı"
+msgstr "Impossibile leggere la cella di Excel"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "Legge tutte le celle della riga Excel corrente"
+
+msgid "Excel satırı okunamadı"
+msgstr "Impossibile leggere la riga di Excel"
+
+msgid "Kopyalanamadı"
+msgstr "Impossibile copiare"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "Questa tabella è troppo grande per essere copiata tutta insieme"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "Questa colonna è troppo grande per essere copiata tutta insieme"
+
+msgid "Bulunulan hücre boş"
+msgstr "La cella corrente è vuota"
+
+msgid "Panoya kopyalandı"
+msgstr "Copiato negli appunti"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "Impossibile copiare i dati Excel"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "Impossibile leggere la cella della tabella"
+
+msgid "Belge sınırı"
+msgstr "Limite del documento"
+
+msgid "Tablo sınırı"
+msgstr "Limite della tabella"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia la riga corrente (solo in modalità tabella)"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "Non sei in una tabella"
+
+msgid "Satır panoya kopyalandı"
+msgstr "Riga copiata negli appunti"
+
+msgid "Satır kopyalanamadı"
+msgstr "Impossibile copiare la riga"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia tutta la tabella (solo in modalità tabella)"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "Impossibile determinare il numero di righe della tabella"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "Impossibile determinare il numero di colonne della tabella"
+
+msgid "Tablo kopyalanamadı"
+msgstr "Impossibile copiare la tabella"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia tutte le celle della colonna corrente (solo in modalità tabella)"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "Numero di righe sconosciuto o tabella troppo grande"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "Nessuna cella da copiare in questa colonna"
+
+msgid "Sütun kopyalanamadı"
+msgstr "Impossibile copiare la colonna"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copia solo il contenuto della cella corrente (solo in modalità tabella)"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "Cella copiata negli appunti"
+
+msgid "Hücre kopyalanamadı"
+msgstr "Impossibile copiare la cella"
+
+msgid "Boş"
+msgstr "Vuoto"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "Colonna {num}"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "{count} righe copiate negli appunti"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "Copiate {count} righe della tabella"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "Copiate {count} celle della colonna"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "Non sei in una cella di Excel"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "Impossibile accedere al foglio Excel"
+
+msgid "Tablo bulunamadı"
+msgstr "Nessuna tabella trovata"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "Nessuna tabella trovata in questa cella"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "Questo intervallo contiene più di {count} colonne"
+
