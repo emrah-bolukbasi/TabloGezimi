@@ -1,0 +1,149 @@
+# English translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "Table Navigation"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "Toggles table navigation"
+
+msgid "Tablo gezimi açıldı"
+msgstr "Table navigation enabled"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "Table navigation disabled"
+
+msgid "Excel hücresi okunamadı"
+msgstr "Could not read the Excel cell"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "Reads all cells in the current Excel row"
+
+msgid "Excel satırı okunamadı"
+msgstr "Could not read the Excel row"
+
+msgid "Kopyalanamadı"
+msgstr "Could not copy"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "This table is too large to copy at once"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "This column is too large to copy at once"
+
+msgid "Bulunulan hücre boş"
+msgstr "Current cell is empty"
+
+msgid "Panoya kopyalandı"
+msgstr "Copied to clipboard"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "Could not copy Excel data"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "Could not read the table cell"
+
+msgid "Belge sınırı"
+msgstr "Document boundary"
+
+msgid "Tablo sınırı"
+msgstr "Table boundary"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copies the current table row to clipboard (table mode only)"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "You are not in a table"
+
+msgid "Satır panoya kopyalandı"
+msgstr "Row copied to clipboard"
+
+msgid "Satır kopyalanamadı"
+msgstr "Could not copy row"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copies the entire table to clipboard (table mode only)"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "Could not determine the number of table rows"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "Could not determine the number of table columns"
+
+msgid "Tablo kopyalanamadı"
+msgstr "Could not copy table"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copies all cells in the current column (table mode only)"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "Could not determine row count, or table is too large"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "No cells to copy in this column"
+
+msgid "Sütun kopyalanamadı"
+msgstr "Could not copy column"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "Copies only the current cell contents (table mode only)"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "Cell copied to clipboard"
+
+msgid "Hücre kopyalanamadı"
+msgstr "Could not copy cell"
+
+msgid "Boş"
+msgstr "Empty"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "Column {num}"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "{count} rows copied to clipboard"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "Copied {count} table rows to clipboard"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "Copied {count} column cells to clipboard"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "You are not in an Excel cell"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "Could not access the Excel worksheet"
+
+msgid "Tablo bulunamadı"
+msgstr "No table found"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "No table found at this cell"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "This data range has more than {count} columns"
+
