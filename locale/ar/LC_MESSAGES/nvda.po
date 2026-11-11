@@ -1,0 +1,150 @@
+# Arabic translations for PROJECT.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-11-11 08:41+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: ar\n"
+"Language-Team: ar <LL@li.org>\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : "
+"n%100>=0 && n%100<=2 ? 4 : 5);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+msgid "Tablo Gezimi"
+msgstr "التنقل في الجداول"
+
+msgid "Tablo gezimini açar veya kapatır"
+msgstr "تفعيل أو إيقاف التنقل في الجداول"
+
+msgid "Tablo gezimi açıldı"
+msgstr "تم تفعيل التنقل في الجداول"
+
+msgid "Tablo gezimi kapatıldı"
+msgstr "تم إيقاف التنقل في الجداول"
+
+msgid "Excel hücresi okunamadı"
+msgstr "تعذرت قراءة خلية Excel"
+
+msgid "Excel'de bulunulan satırın tüm hücrelerini seslendirir"
+msgstr "قراءة جميع خلايا الصف الحالي في Excel"
+
+msgid "Excel satırı okunamadı"
+msgstr "تعذرت قراءة صف Excel"
+
+msgid "Kopyalanamadı"
+msgstr "تعذر النسخ"
+
+msgid "Bu tablo tek seferde kopyalamak için çok büyük"
+msgstr "هذا الجدول كبير جدًا لنسخه دفعة واحدة"
+
+msgid "Bu sütun tek seferde kopyalamak için çok büyük"
+msgstr "هذا العمود كبير جدًا لنسخه دفعة واحدة"
+
+msgid "Bulunulan hücre boş"
+msgstr "الخلية الحالية فارغة"
+
+msgid "Panoya kopyalandı"
+msgstr "تم النسخ إلى الحافظة"
+
+msgid "Excel verileri kopyalanamadı"
+msgstr "تعذر نسخ بيانات Excel"
+
+msgid "Tablo hücresi okunamadı"
+msgstr "تعذرت قراءة خلية الجدول"
+
+msgid "Belge sınırı"
+msgstr "حد المستند"
+
+msgid "Tablo sınırı"
+msgstr "حد الجدول"
+
+msgid "Bulunulan tablo satırını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "نسخ صف الجدول الحالي إلى الحافظة (وضع الجدول فقط)"
+
+msgid "Tablo içinde değilsiniz"
+msgstr "أنت لست داخل جدول"
+
+msgid "Satır panoya kopyalandı"
+msgstr "تم نسخ الصف إلى الحافظة"
+
+msgid "Satır kopyalanamadı"
+msgstr "تعذر نسخ الصف"
+
+msgid "Tablonun tüm satırlarını panoya kopyalar (yalnızca tablo modunda)"
+msgstr "نسخ الجدول بالكامل إلى الحافظة (وضع الجدول فقط)"
+
+msgid "Tablonun satır sayısı belirlenemedi"
+msgstr "تعذر تحديد عدد صفوف الجدول"
+
+msgid "Tablonun sütun sayısı belirlenemedi"
+msgstr "تعذر تحديد عدد أعمدة الجدول"
+
+msgid "Tablo kopyalanamadı"
+msgstr "تعذر نسخ الجدول"
+
+msgid "Bulunulan sütunun tüm hücrelerini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "نسخ جميع خلايا العمود الحالي (وضع الجدول فقط)"
+
+msgid "Tablonun satır sayısı belirlenemedi veya çok büyük"
+msgstr "تعذر تحديد عدد الصفوف أو الجدول كبير جدًا"
+
+msgid "Bu sütunda kopyalanacak hücre bulunamadı"
+msgstr "لا توجد خلايا لنسخها في هذا العمود"
+
+msgid "Sütun kopyalanamadı"
+msgstr "تعذر نسخ العمود"
+
+msgid "Bulunulan hücrenin yalnızca içeriğini panoya kopyalar (yalnızca tablo modunda)"
+msgstr "نسخ محتوى الخلية الحالية فقط (وضع الجدول فقط)"
+
+msgid "Hücre panoya kopyalandı"
+msgstr "تم نسخ الخلية إلى الحافظة"
+
+msgid "Hücre kopyalanamadı"
+msgstr "تعذر نسخ الخلية"
+
+msgid "Boş"
+msgstr "فارغ"
+
+#, python-brace-format
+msgid "Sütun {num}"
+msgstr "العمود {num}"
+
+#, python-brace-format
+msgid "{count} satır panoya kopyalandı"
+msgstr "تم نسخ {count} صف إلى الحافظة"
+
+#, python-brace-format
+msgid "Tablonun {count} satırı panoya kopyalandı"
+msgstr "تم نسخ {count} صف من الجدول"
+
+#, python-brace-format
+msgid "Sütunun {count} hücresi panoya kopyalandı"
+msgstr "تم نسخ {count} خلية من العمود"
+
+msgid "Excel hücresinde değilsiniz"
+msgstr "أنت لست داخل خلية Excel"
+
+msgid "Excel çalışma sayfasına erişilemedi"
+msgstr "تعذر الوصول إلى ورقة عمل Excel"
+
+msgid "Tablo bulunamadı"
+msgstr "لم يتم العثور على جدول"
+
+msgid "Bu hücrede tablo bulunamadı"
+msgstr "لم يتم العثور على جدول في هذه الخلية"
+
+#, python-brace-format
+msgid "Bu veri alanında {count} sütundan fazlası var"
+msgstr "يحتوي نطاق البيانات على أكثر من {count} عمود"
+
