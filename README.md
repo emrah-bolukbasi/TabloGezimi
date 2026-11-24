@@ -1,51 +1,45 @@
 # Tablo Gezimi / Table Navigation
 
-**NVDA add-on, version 1.1.10** · Maintainer: Emrah Bölükbaşı
+**NVDA add-on, version 1.1.11 (release candidate)** · Maintainer: Emrah Bölükbaşı
 
-An NVDA add-on to navigate accessible tables and read complete rows with their column headings. The add-on supports desktop Microsoft Excel via Windows COM and the accessible table interfaces exposed by web browsers and document/PDF readers.
+NVDA add-on for accessible table navigation, row reading and clipboard copying in desktop Microsoft Excel, web pages and accessible document/PDF tables. Developed from the published 1.1.10 release, with the accumulated improvements of internal builds 1.1.11–1.1.17. These internal versions are consolidated into the next public version, **1.1.11**.
 
 ## Features
 
-- Move through accessible table rows and cells with the arrow keys while table navigation is enabled.
-- Read a complete row, including column headings, with Up/Down Arrow.
-- Copy the current cell, row, column, or table to the clipboard.
-- For desktop Excel, detect the active cell's contiguous data region (`CurrentRegion`).
-- Localized UI messages and help in **Turkish, English, Spanish, Russian, Arabic, Simplified Chinese, German, French and Italian**. Unsupported NVDA interface languages fall back to English.
+- Two navigation modes: **mode 1** reads whole rows on Up/Down and cells on Left/Right; **mode 2** reads only the destination cell in each arrow-key direction. Both modes are available in supported Excel, web and PDF tables.
+- Configurable pause between spoken row cells, default **150 ms**, range **0–5000 ms**.
+- Table navigation enabled/disabled state persists across NVDA restarts; the navigation mode itself resets to mode 1 each time table navigation is enabled.
+- Excel arrow-key movement is not restricted to `CurrentRegion`. Empty target cells announce their address (for example A5).
+- Excel row/column/table read and copy operations omit empty values; copied table data is scoped to the current contiguous region (`CurrentRegion`). Fully blank rows and columns separate regions, while Excel-defined table boundaries can be used during target reading.
+- Clipboard copying of the current row, column, cell or entire table.
+- Nine bundled language resources: Turkish, English, Spanish, Russian, Arabic, Simplified Chinese, German, French, Italian. **Newer dialog and mode announcements are currently written in Turkish in the implementation; updated translations should be reviewed before a multilingual public release.**
 
 ## Keyboard shortcuts
 
 | Shortcut | Action |
 | --- | --- |
-| Alt+Shift+O | Toggle table navigation |
-| Up/Down Arrow | Previous/next row, read the row |
-| Left/Right Arrow | Previous/next cell |
+| Alt+Shift+O | Toggle table navigation (saved across restarts) |
+| Ctrl+Shift+Alt+Up Arrow | Switch mode 1 / mode 2 |
+| Ctrl+Shift+Alt+Down Arrow | Set cell pause duration (milliseconds) |
+| Up/Down Arrow | Mode 1: read previous/next row; Mode 2: read previous/next single cell in current column |
+| Left/Right Arrow | Move to previous/next cell |
 | Alt+Shift+Up Arrow | Copy current row |
-| Alt+Shift+Down Arrow | Copy entire table |
+| Alt+Shift+Down Arrow | Copy current table |
 | Alt+Shift+Left Arrow | Copy current column |
 | Alt+Shift+Right Arrow | Copy current cell |
 
-The navigation mode must be enabled for the copy commands.
+The mode-switch command and pause dialog shortcut are available in NVDA's Input Gestures. Copy commands require table navigation to be enabled. Mode 1 is selected whenever the feature is switched on, even after a saved enabled state is restored at NVDA startup.
 
 ## Installation
 
-Download `TabloGezimi-1.1.10.nvda-addon` from [Releases](https://github.com/emrah-bolukbasi/TabloGezimi/releases), open it, confirm installation in NVDA, then restart NVDA.
+Download `TabloGezimi-1.1.11.nvda-addon` from the **v1.1.11** GitHub release *after it has been published*, open the file, confirm installation in NVDA and restart NVDA. At present this is a preparation package: **the new release is not yet published**.
 
 ## Compatibility and limitations
 
-The manifest declares NVDA 2026.1.0 minimum and 2026.3.0 last tested. These values come from the supplied add-on; independent testing against these NVDA releases has not been performed here. The Excel-specific component targets installed Microsoft Excel on Windows. Excel Online, Google Sheets, LibreOffice, and untagged or scanned PDF tables are not guaranteed to work. PDF support depends on the PDF reader exposing NVDA-compatible table information; no OCR is included.
+Declared minimum NVDA version: 2026.1.0; declared last-tested version: 2026.3.0, inherited from the existing manifest, **not independently verified here**. Requires Windows for Excel COM integration. Excel Online, LibreOffice and Google Sheets are not covered by the Excel-specific backend. PDF/document table support depends on accessible table metadata exposed to NVDA; image-only/scanned PDFs require separate OCR. Some table boundaries are only detectable when a completely empty row/column separates data blocks. Cell formatting, merged cells and applications may affect outputs.
 
-Excel's first row in the active contiguous data region is treated as a heading row. Very large tables may take time to read or copy. The bundled DLLs are Windows binaries for x86 and x64.
+## Source, license and release notes
 
-## Source and translations
+Python implementation: `globalPlugins/tabloGezimi/`; native DLL source and build instructions: `native/`; bundled binary DLLs: `globalPlugins/tabloGezimi/x86/` and `x64/`; translations: `locale/`; HTML help: `doc/`. Native binaries are supplied; they have **not** been independently rebuilt for this update. See [CHANGELOG.md](CHANGELOG.md), [LICENSE](LICENSE) and [COPYRIGHT.md](COPYRIGHT.md). GPL-2.0-only.
 
-`globalPlugins/tabloGezimi/` contains the Python add-on implementation, `locale/` contains `.po` and `.mo` translations, and `doc/` contains localized HTML help. The `TabloOkuma.dll` binaries are included in `globalPlugins/tabloGezimi/x86/` and `x64/`.
-
-The original native C source, export definition, and build script are now included in [`native/`](native/). The supplied x86/x64 binaries have been verified byte-for-byte against the native author’s separate source archive. **The source has not been independently rebuilt into byte-identical binaries.** The author has approved GNU GPL version 2 only (`GPL-2.0-only`) for this project, including the native DLL sources and distributed binaries. See [LICENSE](LICENSE) and [COPYRIGHT.md](COPYRIGHT.md).
-
-## Maintainer
-
-Emrah Bölükbaşı · [GitHub profile](https://github.com/emrah-bolukbasi)
-
-## License
-
-Copyright (C) 2026 Emrah Bölükbaşı. Released under [GNU GPL v2 only](LICENSE) (`GPL-2.0-only`), including the supplied native DLL source and distributed DLLs. See [COPYRIGHT.md](COPYRIGHT.md).
+Maintainer: Emrah Bölükbaşı · [GitHub repository](https://github.com/emrah-bolukbasi/TabloGezimi)

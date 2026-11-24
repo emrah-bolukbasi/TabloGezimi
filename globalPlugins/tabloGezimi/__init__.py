@@ -3,12 +3,17 @@ import threading
 import time
 
 import api
+import braille
 import controlTypes
 import core
+import config
+import gui
+import wx
 import globalPluginHandler
 import inputCore
 import queueHandler
 import speech
+from speech.commands import BreakCommand
 import textInfos
 import ui
 from documentBase import DocumentWithTableNavigation, _Axis, _Movement
@@ -18,6 +23,10 @@ from scriptHandler import script
 from .i18n import _
 from .dll_arayuzu import satir_oku, yukle
 from .excel_destegi import ExcelTablosu, ExcelHatasi, excel_hucresinde_mi
+
+
+HUCRE_DURAKLAMA_MS = 150
+HUCRE_DURAKLAMA_EN_FAZLA_MS = 5000
 
 
 HAREKETLER = {
@@ -52,21 +61,29 @@ def _satirlari_birlestir(satirlar):
 def _hizli_excel_satirlari(tur, blok, basliklar, ilk_satir):
     """COM ve NVDA nesnesi içermeyen hazır metin bloğunu biçimlendir."""
     if tur == "sutun":
-        return [satir[0] or _("Boş") for satir in blok]
+        return [satir[0] for satir in blok if satir[0]]
     cikti = []
-    bos = _("Boş")
     for index, satir in enumerate(blok):
         baslik_var = not (ilk_satir and index == 0)
-        cikti.append(", ".join(
-            (f"{baslik} {deger or _('Boş')}" if baslik_var and baslik else deger or _("Boş"))
-            for baslik, deger in zip(basliklar, satir)
-        ))
+        hucreler = [
+            f"{baslik} {deger}" if baslik_var and baslik else deger
+            for baslik, deger in zip(basliklar, satir) if deger
+        ]
+        if hucreler:
+            cikti.append(", ".join(hucreler))
     return cikti
 
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.acik = False
+        # Kullanıcı ayarı NVDA yapılandırma profillerinde saklanır.
+        config.conf.spec["tabloGezimi"] = {
+            "cellPauseMs": "integer(default=150, min=0, max=5000)",
+            "enabled": "boolean(default=False)",
+        }
+        self.acik = bool(config.conf["tabloGezimi"].get("enabled", False))
+        # 1: mevcut satır gezinmesi; 2: tek hücre gezinmesi (web/PDF/Excel).
+        self.gezinme_modu = 1
         self.dll = None
         # En son başlayan gezinmenin sıra numarası.
         self.gezinme_numarasi = 0
@@ -81,6 +98,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             except (OSError, RuntimeError):
                 log.warning("Tablo Gezimi DLL yüklenemedi.", exc_info=True)
         inputCore.decide_executeGesture.register(self.ok_tusunu_yakala)
+        self._excel_tuslarini_ayarla(self.acik and excel_hucresinde_mi())
 
     def terminate(self):
         self._sonlandirildi = True
@@ -100,6 +118,13 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     )
     def script_tabloGeziminiDegistir(self, gesture):
         self.acik = not self.acik
+        config.conf["tabloGezimi"]["enabled"] = self.acik
+        try:
+            config.conf.save()
+        except Exception:
+            log.warning("Tablo Gezimi açık/kapalı durumu diske kaydedilemedi.", exc_info=True)
+        # Her yeni tablo gezimi oturumu her zaman 1. modla başlar.
+        self.gezinme_modu = 1
         self.gezinme_numarasi += 1
         self.kopyalama_numarasi += 1
         self.bekleyen_excel_okuma = None
@@ -107,6 +132,81 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         speech.cancelSpeech()
         self._excel_tuslarini_ayarla(self.acik and excel_hucresinde_mi())
         ui.message(_("Tablo gezimi açıldı") if self.acik else _("Tablo gezimi kapatıldı"))
+
+    def _hucre_modu_destekleniyor(self):
+        """Hücre modu Excel, web ve PDF tablolarında kullanılabilir."""
+        if excel_hucresinde_mi():
+            return True
+        odak = api.getFocusObject()
+        uygulama = getattr(getattr(odak, "appModule", None), "appName", "").lower()
+        if uygulama in {"excel", "winword", "soffice", "swriter"}:
+            return False
+        return self.aktif_belge() is not None
+
+    @script(
+        description="Excel, tarayıcı ve PDF tablolarında satır ve hücre gezinme modları arasında geçiş yap",
+        category=_("Tablo Gezimi"),
+        gesture="kb:control+shift+alt+upArrow",
+    )
+    def script_gezinmeModunuDegistir(self, gesture):
+        if not self.acik:
+            ui.message("Önce tablo gezimini Alt+Shift+O ile açın.")
+            return
+        if not self._hucre_modu_destekleniyor():
+            ui.message("Hücre gezinme modu yalnızca Excel, tarayıcı ve PDF tablolarında kullanılabilir.")
+            return
+        self.gezinme_numarasi += 1
+        self.gezinme_modu = 2 if self.gezinme_modu == 1 else 1
+        speech.cancelSpeech()
+        ui.message("Hücre gezinme modu" if self.gezinme_modu == 2 else "Satır okuma modu")
+
+    @script(
+        description="Hücreler arası duraklama zamanını milisaniye olarak ayarla",
+        category=_("Tablo Gezimi"),
+        gesture="kb:control+shift+alt+downArrow",
+    )
+    def script_hucreDuraklamasiniAyarla(self, gesture):
+        """NVDA Girdi Hareketleri'nden değiştirilebilen duraklama ayarı."""
+        wx.CallAfter(self._hucre_duraklama_penceresini_ac)
+
+    def _hucre_duraklama_penceresini_ac(self):
+        """Klavye erişilebilir Türkçe giriş alanını aç ve ayarı kaydet."""
+        suanki = int(config.conf["tabloGezimi"]["cellPauseMs"])
+        dialog = wx.TextEntryDialog(
+            gui.mainFrame,
+            "Hücreler arası duraklama zamanı giriniz (ms):",
+            "Tablo Gezimi - Hücreler arası duraklama",
+            str(suanki),
+        )
+        try:
+            gui.mainFrame.prePopup()
+            while dialog.ShowModal() == wx.ID_OK:
+                girilen = dialog.GetValue().strip()
+                if not girilen.isascii() or not girilen.isdecimal():
+                    wx.MessageBox(
+                        "Lütfen milisaniye cinsinden 0 ile 5000 arasında tam sayı giriniz.",
+                        "Geçersiz duraklama zamanı", wx.OK | wx.ICON_WARNING, dialog,
+                    )
+                    continue
+                sure = int(girilen)
+                if sure > HUCRE_DURAKLAMA_EN_FAZLA_MS:
+                    wx.MessageBox(
+                        "Duraklama zamanı 0 ile 5000 ms arasında olmalıdır.",
+                        "Geçersiz duraklama zamanı", wx.OK | wx.ICON_WARNING, dialog,
+                    )
+                    continue
+                config.conf["tabloGezimi"]["cellPauseMs"] = sure
+                try:
+                    config.conf.save()
+                except Exception:
+                    log.warning("Tablo Gezimi duraklama ayarı diske kaydedilemedi.", exc_info=True)
+                    ui.message("Duraklama ayarı değiştirildi, fakat yapılandırma diske kaydedilemedi.")
+                    return
+                ui.message("Hücreler arası duraklama %d ms olarak ayarlandı." % sure)
+                return
+        finally:
+            dialog.Destroy()
+            gui.mainFrame.postPopup()
 
     def _excel_tuslarini_ayarla(self, bagla):
         """Yalnızca Excel hücresi odaktayken okları NVDA komutuna bağla.
@@ -245,38 +345,65 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
         )
         return False
 
+    def excel_dolu_metin(self, basliklar, degerler):
+        """Excel: Boş hücreleri okuma ve panoya aktarma."""
+        dolu = [(b, d) for b, d in zip(basliklar, degerler) if d]
+        if not dolu:
+            return ""
+        return self.metin_hazirla([b for b, _ in dolu], [d for _, d in dolu])
+
     def excel_gezin(self, hareket, eksen, numara):
         if not self.acik or numara != self.gezinme_numarasi or not excel_hucresinde_mi():
             return
         try:
-            excel = ExcelTablosu()
+            # Boş hücrede de gezinti mümkün olmalı: tablo seçimi zorunlu değil.
+            excel = ExcelTablosu(allow_empty=True)
             fark = 1 if hareket == _Movement.NEXT else -1
-            # Metni hedef hücreye geçmeden önce hazırla. Excel'in seçim
-            # değişikliği, NVDA'nın odak nesnesini geçici olarak değiştirebilir.
             yeni_satir = excel.satir + (fark if eksen == _Axis.ROW else 0)
             yeni_sutun = excel.sutun + (fark if eksen == _Axis.COLUMN else 0)
-            if not excel.ilk_satir <= yeni_satir <= excel.son_satir or not excel.ilk_sutun <= yeni_sutun <= excel.son_sutun:
-                raise ExcelHatasi(_("Tablo sınırı"))
-            if eksen == _Axis.ROW:
-                basliklar, degerler = excel.satir_verisi(yeni_satir)
-            else:
-                baslik, deger = excel.hucre(yeni_satir, yeni_sutun)
-                basliklar, degerler = [baslik], [deger]
-            metin = self.metin_hazirla(basliklar, degerler)
-            # Seçim değişikliğinin NVDA'ya yaptığı tek hücre duyurusu,
-            # hazırlanan tam satırın konuşmasını iptal etmesin.
+            if not 1 <= yeni_satir <= int(excel.sayfa.Rows.Count) or not 1 <= yeni_sutun <= int(excel.sayfa.Columns.Count):
+                raise ExcelHatasi(_("Çalışma sayfası sınırı"))
+            # Yalnızca ok tuşuyla ulaşılan hedef boş hücrede adresi duyur.
+            # Çoklu hücre okuma ve kopyalama işlemleri bu yola girmez.
+            hedef_bos = not excel.deger(yeni_satir, yeni_sutun)
+            if hedef_bos:
+                # COM'un yerelleştirilmiş Address çıktısına güvenmek yerine
+                # sütun numarasını standart A1 başvurusuna dönüştür.
+                sutun_numarasi = yeni_sutun
+                sutun_harfleri = ""
+                while sutun_numarasi:
+                    sutun_numarasi, kalan = divmod(sutun_numarasi - 1, 26)
+                    sutun_harfleri = chr(65 + kalan) + sutun_harfleri
+                adres = "%s%d" % (sutun_harfleri, yeni_satir)
+                self.excel_duyuru_planlandi = False
+                self.bekleyen_excel_okuma = (numara, adres, [], [], True)
+                excel.sayfa.Cells(yeni_satir, yeni_sutun).Select()
+                core.callLater(115, self.excel_gezinmeyi_duyur, numara)
+                return
+            # İkinci modda Excel'de de yalnızca hedef hücreyi duyur.
+            # Boş hücrenin adresi yukarıdaki mevcut akışta duyurulur.
+            # Satır/sütun/tablo kopyalama ve birinci mod değişmez.
+            if self.gezinme_modu == 2:
+                hucre_metni = excel.deger(yeni_satir, yeni_sutun)
+                self.excel_duyuru_planlandi = False
+                self.bekleyen_excel_okuma = (numara, hucre_metni, [], [], True)
+                excel.sayfa.Cells(yeni_satir, yeni_sutun).Select()
+                core.callLater(115, self.excel_gezinmeyi_duyur, numara)
+                return
+            # Hedefe göre veri bölgesi yeniden belirlenir: iki ayrı tablo
+            # arasında serbestçe ilerlerken yanlış tablonun satırı okunmaz.
+            basliklar, degerler = excel.hedef_verisi(yeni_satir, yeni_sutun, eksen == _Axis.ROW)
+            dolu = [(b, d) for b, d in zip(basliklar, degerler) if d]
+            basliklar = [b for b, _ in dolu]
+            degerler = [d for _, d in dolu]
+            metin = self.excel_dolu_metin(basliklar, degerler)
             self.excel_duyuru_planlandi = False
-            self.bekleyen_excel_okuma = (numara, metin)
+            # Boş hücrede eklenti tarafından ekstra seslendirme yapma;
+            # Excel'in kendi odak ve braille bildirimleri devam eder.
+            self.bekleyen_excel_okuma = (numara, metin, basliklar, degerler) if metin else None
             excel.sayfa.Cells(yeni_satir, yeni_sutun).Select()
-            # Excel'de odak / seçim duyuruları farklı NVDA sürümlerinde
-            # farklı olaylarla gelir. Bu nedenle son duyuru planı olaydan
-            # bağımsız olarak da çalışır.
-            # Sabit 450 ms bekleme hızlı gezinmeyi duraksatıyordu.
-            # Seçim olayının normal yolunu tercih et; olay gelmezse kısa
-            # süreli yedek duyuru devreye girsin.
-            core.callLater(115, self.excel_gezinmeyi_duyur, numara)
-            log.debug("Tablo Gezimi Excel satır hazırlandı: satır=%s, sütun=%s, uzunluk=%s",
-                      yeni_satir, yeni_sutun, len(metin))
+            if metin:
+                core.callLater(115, self.excel_gezinmeyi_duyur, numara)
         except ExcelHatasi as hata:
             self.bekleyen_excel_okuma = None
             if self.acik and numara == self.gezinme_numarasi:
@@ -310,7 +437,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             return
         self.bekleyen_excel_okuma = None
         speech.cancelSpeech()
-        ui.message(bekleyen[1])
+        if len(bekleyen) > 4 and bekleyen[4]:
+            # Boş hedef hücre için yalnızca A1 biçimindeki adresi söyle.
+            ui.message(bekleyen[1])
+        else:
+            self.satiri_seslendir(bekleyen[2], bekleyen[3], bekleyen[1])
 
     def event_gainFocus(self, obj, nextHandler):
         # Excel hücresine girince okları yakala, hücreden veya uygulamadan
@@ -387,7 +518,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             if tur == "hucre":
                 metin = excel.deger(excel.satir, excel.sutun)
             elif tur == "satir":
-                metin = self.metin_hazirla(*excel.satir_verisi(excel.satir))
+                metin = self.excel_dolu_metin(*excel.satir_verisi(excel.satir))
             else:
                 # Büyük Excel alanları kopyalanırken NVDA olay kuyruğuna
                 # küçük parçalar halinde iş bırakılır.
@@ -420,7 +551,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                             return
                         queueHandler.queueFunction(
                             queueHandler.eventQueue, self._kopyalamayi_bitir,
-                            metin, numara, _("{count} satır panoya kopyalandı").format(count=len(blok)),
+                            metin, numara, _("{count} satır panoya kopyalandı").format(count=len(satirlar)),
                         )
                     threading.Thread(target=hizli_isci, name="TabloGezimiExcelMetin", daemon=True).start()
                     return
@@ -445,9 +576,11 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             son = baslangic
             for satir in range(baslangic, en_fazla):
                 if tur == "tablo":
-                    satirlar.append(self.metin_hazirla(*excel.satir_verisi(satir)))
+                    metin = self.excel_dolu_metin(*excel.satir_verisi(satir))
                 else:
-                    satirlar.append(excel.deger(satir, excel.sutun) or _("Boş"))
+                    metin = excel.deger(satir, excel.sutun)
+                if metin:
+                    satirlar.append(metin)
                 son = satir + 1
                 if time.perf_counter() >= bitis_zamani:
                     break
@@ -510,12 +643,19 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
                 # Eklenti açık kalır; normal belge gezintisi devam eder.
                 self.belgede_tablodan_cik(belge, hareket, eksen)
                 return
-            if eksen == _Axis.ROW:
-                basliklar, degerler = self.satir_verisi(belge, info, konum, secim.trueRow)
+            # 2. modda her yönde yalnızca hedef hücrenin içeriği okunur.
+            # Birinci modun satır okumasına ve kopyalama işlemlerine dokunulmaz.
+            hucre_modu = self.gezinme_modu == 2 and self._hucre_modu_destekleniyor()
+            if hucre_modu:
+                metin = " ".join(info.text.split()) or _("Boş")
+                basliklar, degerler = [], []
             else:
-                baslik, deger = self.hucre_verisi(belge, info, konum)
-                basliklar, degerler = [baslik], [deger]
-            metin = self.metin_hazirla(basliklar, degerler)
+                if eksen == _Axis.ROW:
+                    basliklar, degerler = self.satir_verisi(belge, info, konum, secim.trueRow)
+                else:
+                    baslik, deger = self.hucre_verisi(belge, info, konum)
+                    basliklar, degerler = [baslik], [deger]
+                metin = self.metin_hazirla(basliklar, degerler)
             hedef = info.copy()
             hedef.collapse()
             belge.selection = hedef
@@ -524,7 +664,10 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             # konuşmasını başlatma. Seçim değişimi ise sırasıyla korunur.
             if self.acik and numara == self.gezinme_numarasi:
                 speech.cancelSpeech()
-                ui.message(metin)
+                if hucre_modu:
+                    ui.message(metin)
+                else:
+                    self.satiri_seslendir(basliklar, degerler, metin)
         except Exception:
             log.exception("Tablo Gezimi hücreyi okuyamadı.")
             if self.acik and numara == self.gezinme_numarasi:
@@ -819,6 +962,32 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
             baslik, deger = self.hucre_verisi(belge, info, konum, onbellek)
             return [baslik], [deger]
         return basliklar, degerler
+
+    def satiri_seslendir(self, basliklar, degerler, metin):
+        """Hücreler arasında kullanıcının belirlediği süre kadar duraklama gönder.
+
+        Duraklamayı yalnızca konuşmaya uygula. Panoya kopyalanan satırın
+        metni, DLL biçimlendirmesi ve normal tek-hücre okuması değişmez.
+        """
+        if len(degerler) <= 1:
+            ui.message(metin)
+            return
+        duraklama_ms = int(config.conf["tabloGezimi"]["cellPauseMs"])
+        dizi = []
+        for baslik, deger in zip(basliklar, degerler):
+            parca = self.metin_hazirla([baslik], [deger])
+            if dizi:
+                dizi.append(", ")
+                if duraklama_ms:
+                    dizi.append(BreakCommand(duraklama_ms))
+            dizi.append(parca)
+        if not dizi:
+            ui.message(metin)
+            return
+        # ui.message varsayılan olarak konuşma ve braille'i birlikte
+        # günceller. Diziyle konuşurken tam metni braille'e de ilet.
+        speech.speak(dizi)
+        braille.handler.message(metin)
 
     def metin_hazirla(self, basliklar, degerler):
         if self.dll is not None:

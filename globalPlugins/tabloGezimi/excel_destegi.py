@@ -39,7 +39,7 @@ def temizle(deger):
 
 
 class ExcelTablosu:
-    def __init__(self):
+    def __init__(self, allow_empty=False):
         if not excel_hucresinde_mi():
             raise ExcelHatasi(_("Excel hücresinde değilsiniz"))
         odak = api.getFocusObject()
@@ -64,7 +64,7 @@ class ExcelTablosu:
         if self.satir_sayisi < 1 or self.sutun_sayisi < 1:
             raise ExcelHatasi(_("Tablo bulunamadı"))
         # Tek başına boş bir hücre tablo değildir.
-        if self.satir_sayisi == 1 and self.sutun_sayisi == 1 and not self.deger(self.satir, self.sutun):
+        if not allow_empty and self.satir_sayisi == 1 and self.sutun_sayisi == 1 and not self.deger(self.satir, self.sutun):
             raise ExcelHatasi(_("Bu hücrede tablo bulunamadı"))
 
     @property
@@ -136,6 +136,32 @@ class ExcelTablosu:
             basliklar.append(baslik)
             degerler.append(deger)
         return basliklar, degerler
+
+    def hedef_verisi(self, satir, sutun, tum_satir):
+        """Hedef hücrenin kendi tablosunu kullan; boşlukta yalnızca boş döndür."""
+        hedef = self.sayfa.Cells(satir, sutun)
+        if not temizle(hedef.Text):
+            # Satır okumasında hedef sütun boş olsa da aynı veri bölgesinin
+            # başka dolu hücreleri bulunabilir. Fakat bölge dışındaysa
+            # komşu tabloların satırını asla seslendirme.
+            if not (self.ilk_satir <= satir <= self.son_satir and self.ilk_sutun <= sutun <= self.son_sutun):
+                return [], []
+        # Hücrenin bulunduğu ayrı Excel tablo nesnesini tercih et.
+        try:
+            tablo = hedef.ListObject
+            aralik = tablo.Range if tablo is not None else hedef.CurrentRegion
+        except Exception:
+            aralik = hedef.CurrentRegion
+        self.aralik = aralik
+        self.ilk_satir = int(aralik.Row)
+        self.ilk_sutun = int(aralik.Column)
+        self.satir_sayisi = int(aralik.Rows.Count)
+        self.sutun_sayisi = int(aralik.Columns.Count)
+        self._baslik_onbellegi.clear()
+        if tum_satir:
+            return self.satir_verisi(satir)
+        baslik, deger = self.hucre(satir, sutun)
+        return [baslik], [deger]
 
     def ilerle(self, satir_farki, sutun_farki):
         yeni_satir, yeni_sutun = self.satir + satir_farki, self.sutun + sutun_farki
